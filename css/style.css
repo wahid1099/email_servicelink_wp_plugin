@@ -1,0 +1,67 @@
+/* Add styling for the data table */
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid #ccc;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid #ccc;
+}
+
+.data-table th,
+.data-table td {
+  padding: 10px;
+  text-align: left;
+}
+
+.data-table th {
+  background-color: #f2f2f2;
+}
+
+/* Add styling for the add button */
+.srch-button {
+  background-color: #0073aa;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+}
+
+.search-button:hover {
+  background-color: #00577d;
+}
+
+/* Styling for the Delete button */
+.delete-button {
+  background-color: #f44336;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+/* Styling for the Add button */
+.add-button {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+/* Style for the form */
+form {
+  margin-top: 20px;
+}
+
+.success {
+  color: #077a18;
+}
