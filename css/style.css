@@ -28,6 +28,7 @@ table {
   padding: 10px 20px;
   border: none;
   cursor: pointer;
+  border-radius: 25px;
 }
 
 .search-button:hover {
@@ -41,6 +42,9 @@ table {
   border: none;
   padding: 5px 10px;
   cursor: pointer;
+  padding: 8px 26px;
+  font-size: 14px;
+  border-radius: 25px;
 }
 
 /* Styling for the Add button */
@@ -48,13 +52,14 @@ table {
   background-color: #4caf50;
   color: white;
   border: none;
-  padding: 8px 16px;
+  padding: 8px 26px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
   font-size: 14px;
   margin-top: 10px;
   cursor: pointer;
+  border-radius: 25px;
 }
 
 /* Style for the form */
@@ -62,6 +67,47 @@ form {
   margin-top: 20px;
 }
 
-.success {
-  color: #077a18;
+.button-1 {
+  background-color: #ea4c89;
+  border-radius: 25px;
+  border-style: none;
+  box-sizing: border-box;
+  color: #ffffff !important;
+  cursor: pointer;
+  display: inline-block;
+  font-family: "Haas Grot Text R Web", "Helvetica Neue", Helvetica, Arial,
+    sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  height: 40px;
+  line-height: 20px;
+  list-style: none;
+  margin: 0;
+  outline: none;
+  padding: 10px 40px;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  transition: color 100ms;
+  vertical-align: baseline;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
 }
+
+.button-1:hover,
+.button-1:focus {
+  background-color: #f082ac;
+}
+
+/* Change the color of links */
+.button-1 a {
+  color: #f2f0f0 !important;
+  font-weight: bold !important; /* Your desired color */
+}
+
+/* Change the color of visited links */
+/* .button-1 a:visited {
+  color: #711293 !important; /* Change this to your desired color 
+}
+ */

@@ -41,16 +41,20 @@ function mpl_delete_table() {
     $sql = "DROP TABLE IF EXISTS $table_name;";
     $wpdb->query($sql);
 }
+function enqueue_global_stylesheet() {
+    wp_enqueue_style('my-styles', plugins_url('css/style.css', __FILE__));
+}
+add_action('wp_enqueue_scripts', 'enqueue_global_stylesheet');
 
 
 add_action('admin_menu', 'mpl_admin_menu');
 
 function mpl_admin_menu() {
-    add_menu_page('Mail Price Link', 'Mail Price Link', 'manage_options', 'mpl-admin', 'mpl_admin_page', 'dashicons-calendar-alt');
+    add_menu_page('Mail Price Link', 'Mail Price Link', 'edit_posts', 'mpl-admin', 'mpl_admin_page', 'dashicons-calendar-alt');
 }
 
 function mpl_admin_page() {
-    wp_enqueue_style('your-plugin-styles', plugins_url('css/style.css', __FILE__));
+    wp_enqueue_style('my-styles', plugins_url('css/style.css', __FILE__));
 
     global $wpdb;
 
@@ -59,12 +63,17 @@ function mpl_admin_page() {
         $mail = sanitize_text_field($_POST['mail']);
         $price = floatval($_POST['price']);
         $link = esc_url($_POST['link']);
-        $name = esc_url($_POST['name']);
-        $phone = esc_url($_POST['phone']);
-        $adress = esc_url($_POST['adress']);
-        
+        $name = sanitize_text_field($_POST['name']);
+        $phone = sanitize_text_field($_POST['phone']);
+        $adress = sanitize_text_field($_POST['adress']);
+        // Get the current UTC date and time
+      $current_datetime_utc = gmdate('Y-m-d H:i:s'); 
+       // $current_datetime = current_time('mysql', 1);  // Adjust the timezone if needed
+        // $current_datetime = date('Y-m-d H:i:s');
+
+
         $table_name = $wpdb->prefix . 'email_price_link';
-        $wpdb->insert($table_name, array('mail' => $mail, 'price' => $price, 'link' => $link,'phone'=>$phone,'username'=>$name,'adress'=>$adress));
+        $wpdb->insert($table_name, array('mail' => $mail, 'price' => $price, 'link' => $link,'phone'=>$phone,'username'=>$name,'adress'=>$adress,  'created_at' => $current_datetime_utc));
         echo '<p class="success">Added successfully!</p>';
     }
 
@@ -82,7 +91,7 @@ function mpl_admin_page() {
         Price: <input type="number" step="0.01" name="price" required>
         Link: <input type="url" name="link" required>
         Name: <input type="text" name="name" required>
-        Phone: <input type="text" name="phone" required>
+        Phone: <input type="text" name="phone" required></br>
         Adress: <input type="text" name="adress" required>
         <input type="submit" name="submit" value="Add" class="add-button">
     </form>';
@@ -108,7 +117,7 @@ if (isset($_POST['search_submit'])) {
         if (!empty($results)) {
             echo '<h2>Search Results</h2>';
             echo '<table border="1" cellspacing="0" cellpadding="5">';
-            echo '<thead><tr><th>ID</th><th>Mail</th><th>Price</th><th>Link</th><th>Action</th></tr></thead>';
+            echo '<thead><tr><th>ID</th><th>Email</th><th>Price</th><th>Name</th><th>Phone</th><th>Address</th><th>Create At</th></tr></thead>';
             echo '<tbody>';
 
             foreach ($results as $row) {
@@ -147,7 +156,7 @@ try {
     if (!empty($all_results)) {
         echo '<h2>All Data</h2>';
         echo '<table  id="all-data-table" class="data-table" border="1" cellspacing="0" cellpadding="5">';
-        echo '<thead><tr><th>ID</th><th>Mail</th><th>Price</th><th>Link</th><th>Action</th></tr></thead>';
+        echo '<thead><tr><th>ID</th><th>Email</th><th>Price</th><th>Name</th><th>Phone</th><th>Address</th><th>Create At</th><th>Link</th><th>Action</th><tr></thead>';
         echo '<tbody>';
 
         foreach ($all_results as $row) {
@@ -207,18 +216,20 @@ function mpl_show_user_data() {
     // If matching records found, display in a table. Else, show a message.
     if($results) {
         $output = '<table border="1" cellspacing="0" cellpadding="5">';
-        $output .= '<thead><tr><th>ID</th><th>Mail</th><th>Price</th><th>Link</th></tr></thead>';
+        $output .= '<thead><tr><th>Name</th><th>Email</th><th>Price</th>
+        <th>Phone</th><th>Adress</th><th>Created At</th><th>Service Link </th> </tr></thead>';
         $output .= '<tbody>';
 
         foreach($results as $row) {
             $output .= '<tr>';
             $output .= '<td>' . esc_html($row['username']) . '</td>';
             $output .= '<td>' . esc_html($row['mail']) . '</td>';
-            $output .= '<td>' . esc_html($row['price']) . '</td>';
+            $output .= '<td>'. esc_html($row['price']) . '</td>';
+
             $output .= '<td>' . esc_html($row['phone']) . '</td>';
             $output .= '<td>' . esc_html($row['adress']) . '</td>';
             $output .= '<td>' . esc_html($row['created_at']) . '</td>';
-            $output .= '<td><button><a href="' . esc_url($row['link']) . '" target="_blank">Link</a></button></td>';
+            $output .= '<td><button class="button-1"><a href="' . esc_url($row['link']) . '" target="_blank">Book Appoinment</a></button></td>';
             $output .= '</tr>';
         }
 
