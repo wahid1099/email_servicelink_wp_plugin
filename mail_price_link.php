@@ -50,7 +50,7 @@ add_action('wp_enqueue_scripts', 'enqueue_global_stylesheet');
 add_action('admin_menu', 'mpl_admin_menu');
 
 function mpl_admin_menu() {
-    add_menu_page('Mail Price Link', 'Mail Price Link', 'edit_posts', 'mpl-admin', 'mpl_admin_page', 'dashicons-calendar-alt');
+    add_menu_page('Mail Price Link', 'Mail Price Link', 'manage_options', 'mpl-admin', 'mpl_admin_page', 'dashicons-calendar-alt');
 }
 
 function mpl_admin_page() {
@@ -87,12 +87,12 @@ function mpl_admin_page() {
 
     // Form to add new data
     echo '<form method="post" action="">
-        Email: <input type="email" name="mail" required>
-        Price: <input type="number" step="0.01" name="price" required>
-        Link: <input type="url" name="link" required>
-        Name: <input type="text" name="name" required>
-        Phone: <input type="text" name="phone" required></br>
-        Adress: <input type="text" name="adress" required>
+        Email: <input type="email" name="mail" required >
+        Price: <input type="number" step="0.01" name="price" required >
+        Link: <input type="url" name="link" required >
+        Name: <input type="text" name="name" required >
+        Phone: <input type="text" name="phone" required >
+        Adress: <input type="text" name="adress" required >
         <input type="submit" name="submit" value="Add" class="add-button">
     </form>';
 
@@ -215,20 +215,19 @@ function mpl_show_user_data() {
 
     // If matching records found, display in a table. Else, show a message.
     if($results) {
-        $output = '<table border="1" cellspacing="0" cellpadding="5">';
-        $output .= '<thead><tr><th>Name</th><th>Email</th><th>Price</th>
-        <th>Phone</th><th>Adress</th><th>Created At</th><th>Service Link </th> </tr></thead>';
+        $output = '<table border="1" cellspacing="0" cellpadding="5" style="text-align:center">';
+        $output .= '<thead><tr><th>Price</th>
+        <th>Adress</th><th>Your Service  </th> </tr></thead>';
         $output .= '<tbody>';
 
         foreach($results as $row) {
             $output .= '<tr>';
-            $output .= '<td>' . esc_html($row['username']) . '</td>';
-            $output .= '<td>' . esc_html($row['mail']) . '</td>';
+            
             $output .= '<td>'. esc_html($row['price']) . '</td>';
 
-            $output .= '<td>' . esc_html($row['phone']) . '</td>';
+           
             $output .= '<td>' . esc_html($row['adress']) . '</td>';
-            $output .= '<td>' . esc_html($row['created_at']) . '</td>';
+            
             $output .= '<td><button class="button-1"><a href="' . esc_url($row['link']) . '" target="_blank">Book Appoinment</a></button></td>';
             $output .= '</tr>';
         }
